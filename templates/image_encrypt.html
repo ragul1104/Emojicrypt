@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypt Image | Emojicrypt 🤫</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Emojicrypt 🤫</h1>
+            <nav>
+                <a href="{{ url_for('encrypt_page') }}">Encrypt Text</a>
+                <a href="{{ url_for('decrypt_page') }}">Decrypt Text</a>
+                <a href="{{ url_for('qr_share_page') }}">Encrypt to QR</a>
+                <a href="{{ url_for('image_encrypt_page') }}" class="active">Encrypt Image</a>
+                <a href="{{ url_for('image_decrypt_page') }}">Decrypt Image</a>
+                <a href="{{ url_for('scanner_decrypt_page') }}">Scan & Decrypt</a>
+            </nav>
+        </header>
+        <main class="converter single-view">
+            <div class="box">
+                <h2>Encrypt an Image</h2>
+                <label for="image-upload" class="file-upload-label">
+                    <span>Choose Image (max 128x128)</span>
+                </label>
+                <input type="file" id="image-upload" accept="image/png, image/jpeg">
+                <span id="file-name-display">No file chosen</span>
+                <input type="password" id="image-encrypt-password" placeholder="Enter a strong password">
+                <button id="image-encrypt-btn">Encrypt Image</button>
+                <div class="result-container">
+                    <div class="result-box" id="image-encryption-output"></div>
+                    <button id="copy-btn-image" class="copy-button hidden" title="Copy to clipboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zM-1 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM8 1.5A1.5 1.5 0 0 0 6.5 0h-3A1.5 1.5 0 0 0 2 1.5v1A1.5 1.5 0 0 0 3.5 4h3A1.5 1.5 0 0 0 8 2.5v-1z"/></svg>
+                        <span id="copy-feedback-image">Copy</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+        <footer><p>Created by Ragul✨</p></footer>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

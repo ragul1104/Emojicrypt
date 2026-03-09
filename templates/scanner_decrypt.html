@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan & Decrypt | Emojicrypt 🤫</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body id="scanner-decrypt-page">
+    <div class="container">
+        <header>
+            <h1>Emojicrypt 🤫</h1>
+            <nav>
+                <a href="{{ url_for('encrypt_page') }}">Encrypt Text</a>
+                <a href="{{ url_for('decrypt_page') }}">Decrypt Text</a>
+                <a href="{{ url_for('qr_share_page') }}">Encrypt to QR</a>
+                <a href="{{ url_for('image_encrypt_page') }}">Encrypt Image</a>
+                <a href="{{ url_for('image_decrypt_page') }}">Decrypt Image</a>
+                <a href="{{ url_for('scanner_decrypt_page') }}" class="active">Scan & Decrypt</a>
+            </nav>
+        </header>
+        <main class="converter single-view">
+            <div class="box">
+                <h2>Scan & Decrypt QR Code</h2>
+
+                <div id="qr-reader"></div>
+                <div id="qr-scan-status"></div>
+                <button id="start-scan-btn">Start Camera Scan</button>
+                
+                <p style="text-align: center; font-weight: 600; margin: 20px 0;">- OR -</p>
+                
+                <label for="qr-image-upload" class="file-upload-label">
+                    <span>Upload QR Image File</span>
+                </label>
+                <input type="file" id="qr-image-upload" accept="image/*">
+                <span id="qr-file-name-display">No file chosen</span>
+
+                <hr style="border-color: rgba(255,255,255,0.2); margin: 20px 0;">
+
+                <textarea id="emoji-input-scanner" placeholder="Scanned emoji code will appear here..."></textarea>
+                <input type="password" id="scanner-decrypt-password" placeholder="Enter the password">
+                <button id="scanner-decrypt-btn">Decrypt Scanned Message</button>
+
+                <div class="result-box" id="scanner-decryption-output"></div>
+            </div>
+        </main>
+        <footer><p>Created by Ragul✨</p></footer>
+    </div>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
