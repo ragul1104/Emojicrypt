@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EmojiCrypt — Convert text and images to emoji code using a password-based cipher. Fun, free, and fully client-side." />
+  <meta property="og:title" content="EmojiCrypt" />
+  <meta property="og:description" content="Encrypt text & images into emoji sequences with a passphrase." />
+  <meta name="theme-color" content="#f59e0b" />
+  <title>EmojiCrypt — Emoji Encryption Tool</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <div class="logo-icon">🔐</div>
+      <span class="logo-text">Emoji<span>Crypt</span></span>
+    </a>
+    <div class="header-links">
+      <span class="badge-live">Live</span>
+      <a href="https://github.com/ragul1104/emojicrypt" target="_blank" class="header-link" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span>GitHub</span>
+      </a>
+      <a href="https://emojicrypt-five.vercel.app" target="_blank" class="header-link" aria-label="Live Demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        <span>Live</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ HERO ══════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-label">🔒 Password-Protected Cipher</div>
+  <h1>Text &amp; Images → <span class="accent">Emoji Code</span></h1>
+  <p>Encode any message or image into an emoji sequence using a secret passphrase. Fully client-side — nothing leaves your browser.</p>
+</div>
+
+<!-- ═══ MAIN ══════════════════════════════════════════════════════ -->
+<main>
+
+  <!-- Tab Navigation -->
+  <nav class="tab-nav" role="tablist" aria-label="Encryption modes">
+    <button class="tab-btn active" data-tab="text" role="tab" aria-selected="true">
+      <span class="tab-icon">📝</span>
+      <span class="tab-label">Text</span>
+    </button>
+    <button class="tab-btn" data-tab="image" role="tab" aria-selected="false">
+      <span class="tab-icon">🖼️</span>
+      <span class="tab-label">Image</span>
+    </button>
+    <button class="tab-btn" data-tab="qr" role="tab" aria-selected="false">
+      <span class="tab-icon">📱</span>
+      <span class="tab-label">QR Code</span>
+    </button>
+    <button class="tab-btn" data-tab="scan" role="tab" aria-selected="false">
+      <span class="tab-icon">📷</span>
+      <span class="tab-label">Scan QR</span>
+    </button>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════
+       TAB 1 — TEXT ENCRYPT / DECRYPT
+  ══════════════════════════════════════════════ -->
+  <div class="tab-pane active" id="tab-text">
+
+    <!-- Encrypt: Text → Emoji -->
+    <div class="crypto-card" id="enc-card">
+      <div class="section-heading">
+        <h3>Encrypt</h3>
+        <span class="section-badge enc-badge">Plain Text → Emoji Code</span>
+      </div>
+
+      <div class="two-panel">
+        <!-- LEFT: input -->
+        <div>
+          <div class="panel-label">
+            <span class="panel-label-text">📄 Plain Text</span>
+            <span class="char-count" id="enc-count">0 chars</span>
+          </div>
+          <textarea id="enc-input" placeholder="Type your secret message here…" aria-label="Plain text to encrypt" spellcheck="false"></textarea>
+        </div>
+
+        <!-- MIDDLE: arrow -->
+        <div class="panel-divider">
+          <div class="direction-arrows">
+            <div style="font-size:1.5rem;color:var(--accent);">➡️</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: output -->
+        <div>
+          <div class="panel-label">
+            <span class="panel-label-text">🔒 Emoji Code</span>
+            <button class="btn btn-copy hidden" id="enc-copy-btn" title="Copy emoji code">📋 Copy</button>
+          </div>
+          <textarea class="output-area" id="enc-output" placeholder="Encrypted emojis will appear here…" readonly aria-label="Encrypted emoji output" spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <!-- Password + Actions -->
+      <div class="password-row">
+        <div class="password-wrap">
+          <div class="password-label">🔑 Passphrase</div>
+          <input type="password" class="password-input" id="enc-password" placeholder="Enter a strong passphrase…" autocomplete="new-password" />
+          <button class="eye-btn" data-target="enc-password" aria-label="Toggle password visibility">👁</button>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-encrypt" id="enc-btn">
+          <span>🔒</span> Encrypt Text → Emoji
+        </button>
+        <button class="btn btn-ghost" id="enc-clear">Clear</button>
+      </div>
+      <div class="status-bar idle" id="enc-status"></div>
+    </div>
+
+    <!-- Decrypt: Emoji → Text -->
+    <div class="crypto-card" id="dec-card">
+      <div class="section-heading">
+        <h3>Decrypt</h3>
+        <span class="section-badge dec-badge">Emoji Code → Plain Text</span>
+      </div>
+
+      <div class="two-panel">
+        <!-- LEFT: emoji input -->
+        <div>
+          <div class="panel-label">
+            <span class="panel-label-text">🔒 Emoji Code</span>
+            <span class="char-count" id="dec-emoji-count">0 emojis</span>
+          </div>
+          <textarea id="dec-input" placeholder="Paste emoji code here…" aria-label="Emoji code to decrypt" spellcheck="false"></textarea>
+        </div>
+
+        <!-- MIDDLE: arrow -->
+        <div class="panel-divider">
+          <div class="direction-arrows">
+            <div style="font-size:1.5rem;color:var(--blue);">➡️</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: output -->
+        <div>
+          <div class="panel-label">
+            <span class="panel-label-text">📄 Plain Text</span>
+            <button class="btn btn-copy hidden" id="dec-copy-btn" title="Copy plain text">📋 Copy</button>
+          </div>
+          <textarea class="output-area text-output" id="dec-output" placeholder="Decrypted text will appear here…" readonly aria-label="Decrypted text output" spellcheck="false"></textarea>
+        </div>
+      </div>
+
+      <div class="password-row">
+        <div class="password-wrap">
+          <div class="password-label">🔑 Passphrase</div>
+          <input type="password" class="password-input" id="dec-password" placeholder="Enter the same passphrase used to encrypt…" autocomplete="current-password" />
+          <button class="eye-btn" data-target="dec-password" aria-label="Toggle password visibility">👁</button>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-decrypt" id="dec-btn">
+          <span>🔓</span> Decrypt Emoji → Text
+        </button>
+        <button class="btn btn-ghost" id="dec-clear">Clear</button>
+      </div>
+      <div class="status-bar idle" id="dec-status"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       TAB 2 — IMAGE ENCRYPT / DECRYPT
+  ══════════════════════════════════════════════ -->
+  <div class="tab-pane" id="tab-image">
+
+    <!-- Image → Emoji -->
+    <div class="crypto-card">
+      <div class="section-heading">
+        <h3>Image Encrypt</h3>
+        <span class="section-badge enc-badge">Image → Emoji Code</span>
+      </div>
+
+      <div class="info-box">
+        <span class="info-icon">ℹ️</span>
+        Images are resized to max 128×128 pixels before encryption. Larger images may take a few seconds.
+      </div>
+
+      <label class="upload-zone" id="img-enc-zone" for="img-file-input">
+        <div class="upload-icon">📁</div>
+        <div class="upload-title">Click or drag image here</div>
+        <div class="upload-sub">Supports PNG, JPG, GIF, WebP</div>
+        <span class="upload-filename hidden" id="img-enc-filename"></span>
+      </label>
+      <input type="file" id="img-file-input" accept="image/*" />
+
+      <div class="image-preview-wrap" id="img-enc-preview">
+        <img id="img-enc-thumb" alt="Preview" />
+        <div class="img-meta" id="img-enc-meta"></div>
+      </div>
+
+      <div class="password-wrap mt-12" style="max-width:480px;">
+        <div class="password-label">🔑 Passphrase</div>
+        <input type="password" class="password-input" id="img-enc-password" placeholder="Enter a passphrase…" />
+        <button class="eye-btn" data-target="img-enc-password" aria-label="Toggle">👁</button>
+      </div>
+
+      <div class="btn-row mt-16">
+        <button class="btn btn-encrypt" id="img-enc-btn">🔒 Encrypt Image → Emoji</button>
+      </div>
+      <div class="status-bar idle" id="img-enc-status"></div>
+
+      <div id="img-enc-output-wrap" class="hidden mt-16">
+        <div class="panel-label">
+          <span class="panel-label-text">🔒 Emoji Code</span>
+          <button class="btn btn-copy" id="img-enc-copy">📋 Copy</button>
+        </div>
+        <textarea class="output-area" id="img-enc-output" rows="6" readonly style="min-height:120px;"></textarea>
+      </div>
+    </div>
+
+    <!-- Emoji → Image -->
+    <div class="crypto-card">
+      <div class="section-heading">
+        <h3>Image Decrypt</h3>
+        <span class="section-badge dec-badge">Emoji Code → Image</span>
+      </div>
+
+      <div class="panel-label">
+        <span class="panel-label-text">🔒 Emoji Code</span>
+        <span class="char-count" id="img-dec-count">0 chars</span>
+      </div>
+      <textarea id="img-dec-input" placeholder="Paste image emoji code here…" style="min-height:120px;"></textarea>
+
+      <div class="password-wrap mt-12" style="max-width:480px;">
+        <div class="password-label">🔑 Passphrase</div>
+        <input type="password" class="password-input" id="img-dec-password" placeholder="Enter the same passphrase…" />
+        <button class="eye-btn" data-target="img-dec-password" aria-label="Toggle">👁</button>
+      </div>
+
+      <div class="btn-row mt-16">
+        <button class="btn btn-decrypt" id="img-dec-btn">🔓 Decrypt Emoji → Image</button>
+      </div>
+      <div class="status-bar idle" id="img-dec-status"></div>
+
+      <div class="image-preview-wrap" id="img-dec-preview" style="margin-top:16px;">
+        <img id="img-dec-result" alt="Decrypted image" />
+        <div class="mt-12">
+          <a id="img-dec-download" class="btn btn-ghost" download="decrypted.png" style="display:inline-flex;font-size:0.85rem;">💾 Download Image</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       TAB 3 — QR CODE
+  ══════════════════════════════════════════════ -->
+  <div class="tab-pane" id="tab-qr">
+    <div class="crypto-card">
+      <div class="section-heading">
+        <h3>Text → Encrypted QR Code</h3>
+        <span class="section-badge enc-badge">Plain Text → Emoji → QR</span>
+      </div>
+
+      <div class="info-box">
+        <span class="info-icon">ℹ️</span>
+        Your text is first encrypted into emojis, then that emoji string is encoded as a QR code. Keep your passphrase to decode later.
+      </div>
+
+      <div class="panel-label">
+        <span class="panel-label-text">📄 Message</span>
+        <span class="char-count" id="qr-count">0 / 100</span>
+      </div>
+      <textarea id="qr-input" placeholder="Type a short message to encrypt as QR (max 100 chars)…" style="min-height:120px;" maxlength="150"></textarea>
+
+      <div class="password-wrap mt-12" style="max-width:480px;">
+        <div class="password-label">🔑 Passphrase</div>
+        <input type="password" class="password-input" id="qr-password" placeholder="Enter a passphrase…" />
+        <button class="eye-btn" data-target="qr-password" aria-label="Toggle">👁</button>
+      </div>
+
+      <div class="btn-row mt-16">
+        <button class="btn btn-encrypt" id="qr-btn">📱 Generate Encrypted QR</button>
+      </div>
+      <div class="status-bar idle" id="qr-status"></div>
+
+      <div class="qr-result" id="qr-result">
+        <canvas id="qr-canvas"></canvas>
+        <div style="text-align:center;">
+          <div style="font-size:0.8rem;color:var(--txt-mid);margin-bottom:12px;font-family:var(--font-mono);">Scan this QR to get the emoji code, then use Decrypt to read the message.</div>
+          <a id="qr-download" class="btn btn-ghost" download="emojicrypt-qr.png" style="display:inline-flex;font-size:0.85rem;">💾 Download QR</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       TAB 4 — SCAN QR
+  ══════════════════════════════════════════════ -->
+  <div class="tab-pane" id="tab-scan">
+    <div class="crypto-card">
+      <div class="section-heading">
+        <h3>Scan QR → Decrypt</h3>
+        <span class="section-badge dec-badge">QR Code → Emoji → Plain Text</span>
+      </div>
+
+      <div class="info-box">
+        <span class="info-icon">ℹ️</span>
+        Point your camera at an EmojiCrypt QR code, then enter the passphrase to reveal the hidden message.
+      </div>
+
+      <div class="btn-row mt-12">
+        <button class="btn btn-encrypt" id="scan-start-btn">📷 Start Camera Scan</button>
+        <button class="btn btn-ghost hidden" id="scan-stop-btn">⏹ Stop Scan</button>
+      </div>
+
+      <div id="qr-reader" class="hidden mt-16"></div>
+
+      <div class="scanner-result" id="scan-result-wrap">
+        <div class="panel-label">
+          <span class="panel-label-text">🔒 Scanned Emoji Code</span>
+          <button class="btn btn-copy" id="scan-copy-raw">📋 Copy</button>
+        </div>
+        <textarea id="scan-raw" readonly rows="3" style="min-height:80px;" class="output-area"></textarea>
+
+        <div class="password-wrap mt-12" style="max-width:480px;">
+          <div class="password-label">🔑 Passphrase</div>
+          <input type="password" class="password-input" id="scan-password" placeholder="Enter passphrase to decrypt…" />
+          <button class="eye-btn" data-target="scan-password" aria-label="Toggle">👁</button>
+        </div>
+
+        <div class="btn-row mt-12">
+          <button class="btn btn-decrypt" id="scan-decrypt-btn">🔓 Decrypt Emoji → Text</button>
+        </div>
+
+        <div class="status-bar idle" id="scan-status" style="margin-top:12px;"></div>
+
+        <div class="panel-label mt-16 hidden" id="scan-out-label">
+          <span class="panel-label-text">📄 Plain Text</span>
+          <button class="btn btn-copy" id="scan-copy-out">📋 Copy</button>
+        </div>
+        <textarea id="scan-output" readonly rows="4" class="output-area text-output hidden" style="min-height:100px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════════ -->
+<footer>
+  <p>
+    Built by <a href="https://linkedin.com/in/ragulv11" target="_blank">Ragul V</a> ·
+    <a href="https://github.com/ragul1104/emojicrypt" target="_blank">GitHub</a> ·
+    <span style="color:var(--txt-lo);">All processing happens in your browser — no data is sent to any server.</span>
+  </p>
+</footer>
+
+<!-- ═══ TOAST ════════════════════════════════════════════════════ -->
+<div class="copy-success-toast" id="toast">✓ Copied to clipboard!</div>
+
+<!-- ═══ SCRIPTS ══════════════════════════════════════════════════ -->
+<script src="emojicrypt.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
